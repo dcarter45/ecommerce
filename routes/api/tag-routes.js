@@ -23,11 +23,18 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new tag
+  tagRoute.create(req.body)
+  .then((newTagRoute) => {
+    res.json(newTagRoute);
+  })
+  .catch((err) => {
+    res.json(err);
+  });
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  tag.update(req.body, {
+  tagRoute.update(req.body, {
     where: {
       id: req.params.id,
     },
