@@ -6,7 +6,8 @@ const { Tag, Product, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all tags
   // be sure to include its associated Product data
-  tag.findAll({include:ProductTag}).then((tagData) => {
+  // maybe specify on
+  Tag.findAll({include:Product}).then((tagData) => {
     res.json(tagData);
   });
 });
@@ -14,18 +15,18 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  Tag.findOne({
+  Tag.findByPk(req.params.id,{
+    include: [{model:Product, through: ProductTag}],
+    }).then((tag)=>{
+      res.json(tag)
+    })
 
-    include: ProductTag,
-    where: { 
-      id: req.params.id 
-    },
+    
   })
-});
 
 router.post('/', (req, res) => {
   // create a new tag
-  tagRoute.create(req.body)
+  Tag.create(req.body)
   .then((newTagRoute) => {
     res.json(newTagRoute);
   })
@@ -36,20 +37,24 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  tagRoute.update(req.body, {
+  Tag.update(req.body, {
     where: {
       id: req.params.id,
     },
   })
     .then((Tag) => {
       // find all associated tags from ProductTag
-      return tag.findAll({ where: { tag_id: req.params.id } });
+      return Tag.findAll({ where: { tag_id: req.params.id } });
     })
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  tag.create(req.body)
+  Tag.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
   .then((newTag) => {
     res.json(newTag);
   })
