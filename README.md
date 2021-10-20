@@ -24,10 +24,10 @@ Run `npm install` to install all dependencies. To use the application locally, r
 
 
 ## Deployed Link:
-[Employee Tracker Database](https://github.com/dcarter45/ecommerce)
+[Ecommerce](https://github.com/dcarter45/ecommerce)
 
 ## Learning Points:
-* This app was a practice in writing the backend code to create and update a database.
+* This app was a practice in writing the backend code to update a database.
 
 
 ## Built With
