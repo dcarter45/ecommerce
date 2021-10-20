@@ -39,16 +39,19 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
-category.update({
-  id:req.body.id
-}).then((updatedCategory) =>{
-  es.json(updatedCategory);
+  Category.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+.then((updatedCategory) =>{
+  res.json(updatedCategory);
     })
     .catch((err) => res.json(err));
 });
 
 router.delete('/:id', (req, res) => {
-  category.destroy({
+  Category.destroy({
     where: {
       id: req.params.id,
     },
